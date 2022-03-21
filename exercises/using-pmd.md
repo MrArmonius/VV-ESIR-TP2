@@ -8,15 +8,14 @@ We have downloaded Apache Common Maths and ran the command : `./run.sh pmd -d /h
 
 
 True positive : java:362:	ForLoopCanBeForeach:	This for loop can be replaced by a foreach loop
-
-            ```java
-            List<int[]> row = new ArrayList<int[]>(dRow.length * 2);
-            for (int j = 0; j < dRow.length; ++j) {
-                row.add(new int[] { dRow[j][0], lowerIndirection[dRow[j][1]], vSize + dRow[j][2] });
-                row.add(new int[] { dRow[j][0], vSize + dRow[j][1], lowerIndirection[dRow[j][2]] });
-            }
-            ```
-            
+```java
+  List<int[]> row = new ArrayList<int[]>(dRow.length * 2);
+  for (int j = 0; j < dRow.length; ++j) {
+            row.add(new int[] { dRow[j][0], lowerIndirection[dRow[j][1]], vSize + dRow[j][2] });
+            row.add(new int[] { dRow[j][0], vSize + dRow[j][1], lowerIndirection[dRow[j][2]] });
+  }
+  ```
+           
 We can see here that there is a list which is itirated by a for loop. Therefore it should change the for loop by a foreach loop.
 
 False positive : 
