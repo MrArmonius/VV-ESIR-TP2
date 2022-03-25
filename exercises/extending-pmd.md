@@ -30,3 +30,42 @@ Use your rule with different projects and describe you findings below. See the [
 /home/tbauquin/Téléchargements/pmd-bin-6.42.0/bin/main.java:6:	3if:	Warning : There is more than 3 if statements
 ```
 
+```xml
+    <ruleset name="truc">
+        <rule name="3if"
+              language="java"
+              message="Warning : There is more than 3 if statements"
+              class="net.sourceforge.pmd.lang.rule.XPathRule">
+           <description>
+
+           </description>
+           <priority>3</priority>
+           <properties>
+              <property name="version" value="2.0"/>
+              <property name="xpath">
+                 <value>
+        <![CDATA[
+        //IfStatement//IfStatement//IfStatement
+        ]]>
+                 </value>
+              </property>
+           </properties>
+        </rule>
+    </ruleset>
+```
+
+```java
+public class main{
+
+public static void main(String args[]){
+    if(true){
+        if(true){
+            if(true){
+            }
+        }
+    }
+}
+
+}
+```
+
