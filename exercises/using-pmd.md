@@ -21,9 +21,9 @@ We can see here that there is a list which is itirated by a for loop. Therefore 
    
 False positive : java:142:	LocalVariableNamingConventions:	The final local variable name 'b_two_j_p_1' doesn't match '[a-z][a-zA-Z0-9]*'
 
-     ```java
+  ```java
      final BigDecimal b_j = new BigDecimal(j, mContext);
-     ```
+  ```
      
 The problem here is that the name of the variable does not match the coding convention (there are underscores in the name).
 
