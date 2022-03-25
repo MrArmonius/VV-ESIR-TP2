@@ -23,3 +23,8 @@ Use your rule with different projects and describe you findings below. See the [
 
 ## Answer
 
+./run.sh pmd -d /home/tbauquin/Téléchargements/pmd-bin-6.42.0/bin/main.java -f text -R if.xml 
+
+/home/tbauquin/Téléchargements/pmd-bin-6.42.0/bin/main.java:6:	3if:	Warning : There is more than 3 if statements
+
+
