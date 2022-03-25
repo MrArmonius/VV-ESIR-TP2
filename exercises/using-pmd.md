@@ -16,6 +16,15 @@ True positive : java:362:	ForLoopCanBeForeach:	This for loop can be replaced by 
   }
   ```
            
-We can see here that there is a list which is itirated by a for loop. Therefore it should change the for loop by a foreach loop.
+We can see here that there is a list which is itirated by a for loop. Therefore it should change the for loop by a foreach loop (It is not really an issue actually).
 
-False positive : 
+   
+False positive : java:142:	LocalVariableNamingConventions:	The final local variable name 'b_two_j_p_1' doesn't match '[a-z][a-zA-Z0-9]*'
+
+  ```java
+     final BigDecimal b_j = new BigDecimal(j, mContext);
+     ```
+     
+The problem here is that the name of the variable does not match the coding convention (there are underscores in the name).
+
+We should not change this name as it is probably a convention that the devellopers or Apache have chosen themselves. The convention rule in pmd may not be the one they chose. 
