@@ -9,7 +9,8 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.utils.SourceRoot;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.IOException;  // Import the IOException class to handle errors
+import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -25,6 +26,28 @@ public class Main {
         if(!file.exists() || !file.isDirectory() || !file.canRead()) {
             System.err.println("Provide a path to an existing readable directory");
             System.exit(2);
+        }
+
+        
+        try {
+            File myObj = new File("Report.txt");
+            if (myObj.createNewFile()) {
+              System.out.println("File created: " + myObj.getName());
+            } else {
+              System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter myWriter = new FileWriter("Report.txt");
+            myWriter.write("");
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
 
         SourceRoot root = new SourceRoot(file.toPath());

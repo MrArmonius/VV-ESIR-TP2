@@ -3,11 +3,14 @@ package fr.istic.vv;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.visitor.VoidVisitorWithDefaults;
+
 import java.util.HashMap;
 import java.util.Map;
-
 import java.util.Set;
 
+import java.io.IOException;  // Import the IOException class to handle errors
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 // This class visits a compilation unit and
 // prints all public enum, classes or interfaces along with their public methods
@@ -24,7 +27,7 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
 
     public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg) {
         //if(!declaration.isPublic()) return;
-        System.out.println(declaration.getFullyQualifiedName().orElse("[Anonymous]") + " or simply " + declaration.getName());
+        //System.out.println(declaration.getFullyQualifiedName().orElse("[Anonymous]") + " or simply " + declaration.getName());
         for(FieldDeclaration field : declaration.getFields()) {
             field.accept(this, arg);
         }
@@ -39,11 +42,23 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
             if (member instanceof TypeDeclaration)
                 member.accept(this, arg);
         }
-
-        Set<String> getterKeys = getterBook.keySet();
-        for(String key : getterKeys) {
-            System.out.println(" " + getterBook.get(key).getName());
+        
+        try {
+            FileWriter myWriter = new FileWriter("Report.txt", true);
+            BufferedWriter bufWrite = new BufferedWriter(myWriter);
+            bufWrite.write(declaration.getFullyQualifiedName().orElse("[Anonymous]") + " or simply " + declaration.getName() + "\n");
+            Set<String> getterKeys = getterBook.keySet();
+            for(String key : getterKeys) {
+                bufWrite.write("   " + getterBook.get(key).getName() + "\n");
+            }
+            bufWrite.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
+
+        
         getterBook.clear();
     }
 
