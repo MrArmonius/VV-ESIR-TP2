@@ -1,0 +1,18 @@
+strict graph {
+"public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)" -- "public void visit(FieldDeclaration declaration, Void arg)";
+"public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)" -- "private void forEachMethod(NameExpr name, String nameMethod)";
+"public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)" -- "private String calculateTotalPairNodes()";
+"private String calculateTotalPairNodes()" -- "public void visit(MethodDeclaration declaration, Void arg)";
+"public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)" -- "private Map<String, Set<String>> calculatePairNodes()";
+"public void visit(MethodDeclaration declaration, Void arg)" -- "public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)";
+"private Map<String, Set<String>> calculatePairNodes()" -- "public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)";
+"private void forEachMethod(NameExpr name, String nameMethod)" -- "public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)";
+"public void visit(FieldDeclaration declaration, Void arg)" -- "public void visit(MethodDeclaration declaration, Void arg)";
+"private Map<String, Set<String>> calculatePairNodes()" -- "private void forEachMethod(NameExpr name, String nameMethod)";
+"public void visit(MethodDeclaration declaration, Void arg)" -- "private String calculateTotalPairNodes()";
+"public void visit(FieldDeclaration declaration, Void arg)" -- "public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)";
+"private String calculateTotalPairNodes()" -- "public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)";
+"public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)" -- "public void visit(MethodDeclaration declaration, Void arg)";
+"private void forEachMethod(NameExpr name, String nameMethod)" -- "private Map<String, Set<String>> calculatePairNodes()";
+"public void visit(MethodDeclaration declaration, Void arg)" -- "public void visit(FieldDeclaration declaration, Void arg)";
+}

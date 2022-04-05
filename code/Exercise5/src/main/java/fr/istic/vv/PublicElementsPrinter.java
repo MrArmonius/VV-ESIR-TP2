@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 
+import java.io.File;
 import java.io.IOException;  // Import the IOException class to handle errors
 import java.io.FileWriter;
 import java.io.BufferedWriter;
@@ -32,7 +33,11 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
     }
 
     public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg) {
-        System.out.print(declaration.getFullyQualifiedName().orElse("[Anonymous]") + " or simply " + declaration.getName() + "\n");
+        String className = (declaration.getFullyQualifiedName().orElse("[Anonymous]")).toString();
+        System.out.print(className + " or simply " + declaration.getName() + "\n");
+
+        
+
         for(FieldDeclaration field : declaration.getFields()) {
             field.accept(this, arg);
         }
@@ -40,7 +45,7 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
         for(MethodDeclaration method : declaration.getMethods()) {
             method.accept(this, arg);
         }
-
+        PairNodeClass.put(className, calculatePairNodes());
         
         // Printing nested types in the top level
         for(BodyDeclaration<?> member : declaration.getMembers()) {
@@ -51,12 +56,41 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
         try {
             FileWriter myWriter = new FileWriter("Report.txt", true);
             BufferedWriter bufWrite = new BufferedWriter(myWriter);
-            bufWrite.write(declaration.getFullyQualifiedName().orElse("[Anonymous]") + " or simply " + declaration.getName() + "\n");
+            bufWrite.write(className + " or simply " + declaration.getName() + "\n");
             Set<String> getterKeys = methodVariables.keySet();
             for(String key : getterKeys) {
                 bufWrite.write("   " + key + " - "+ methodVariables.get(key) + "\n");
             }
             bufWrite.write("\n" + "TCC score: "+ calculateTCC() + "\n");
+            bufWrite.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        
+        try {
+            File myObj = new File(className);
+            if (myObj.createNewFile()) {
+              System.out.println("File created: " + myObj.getName());
+            } else {
+              System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        try {
+            FileWriter myWriter = new FileWriter(className);
+            BufferedWriter bufWrite = new BufferedWriter(myWriter);
+            bufWrite.write("strict graph {\n");
+            Map<String, Set<String>> PairNod = PairNodeClass.get(className);
+            Set<String> NodeKeys = PairNod.keySet();
+            for(String key : NodeKeys) {
+                bufWrite.write(key + ";\n");
+            }
+            bufWrite.write("}\n");
             bufWrite.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -111,10 +145,6 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
     private Map<String, Set<String>> calculatePairNodes() {
         Map<String, Set<String>> pairNodes = new HashMap<String, Set<String>>();
 
-        
-
-        
-
         // Create pairNodes
         Set<String> methodKeys = methodVariables.keySet();
         for(String key : methodKeys) {
@@ -124,7 +154,7 @@ public class PublicElementsPrinter extends VoidVisitorWithDefaults<Void> {
 
                 for(String variable2 : variables) {
                     if(variable.compareTo(variable2) != 0) {
-                        String namePair = variable + " -> " + variable2;
+                        String namePair = "\"" + variable + "\" -- \"" + variable2 + "\"";
                         if(!pairNodes.containsKey(namePair)) {
                             pairNodes.put( namePair, new HashSet<String>());
                         }
