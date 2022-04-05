@@ -1,0 +1,9 @@
+fr.istic.vv.PublicElementsPrinter or simply PublicElementsPrinter
+   numberMethod - [public void visit(MethodDeclaration declaration, Void arg), private String calculateTotalPairNodes(), public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)]
+   getterBook - [public void visit(MethodDeclaration declaration, Void arg), public void visit(FieldDeclaration declaration, Void arg), public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg)]
+   methodVariables - [private Map<String, Set<String>> calculatePairNodes(), public void visitTypeDeclaration(TypeDeclaration<?> declaration, Void arg), private void forEachMethod(NameExpr name, String nameMethod)]
+
+TCC score: 16/36
+fr.istic.vv.Main or simply Main
+
+TCC score: 0/0
